@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-
 import 'package:timer_count_down/timer_controller.dart';
 
 ///
@@ -23,6 +22,9 @@ class Countdown extends StatefulWidget {
   // Controller
   final CountdownController controller;
 
+  // Whether the timer should be started started on creation
+  final bool startOnInit;
+
   Countdown({
     Key key,
     @required this.seconds,
@@ -30,6 +32,7 @@ class Countdown extends StatefulWidget {
     this.interval = const Duration(seconds: 1),
     this.onFinished,
     this.controller,
+    this.startOnInit,
   }) : super(key: key);
 
   @override
@@ -58,7 +61,9 @@ class _CountdownState extends State<Countdown> {
     widget.controller?.setOnRestart(_onTimerRestart);
     widget.controller?.isCompleted = false;
 
-    _startTimer();
+    if (widget.startOnInit) {
+      _startTimer();
+    }
 
     super.initState();
   }
